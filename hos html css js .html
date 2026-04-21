@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hospital Appointment Form</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f2f2f2;
+        }
+
+        form {
+            background: white;
+            padding: 20px;
+            width: 350px;
+            margin: auto;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+        }
+
+        button {
+            background-color: blue;
+            color: white;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Hospital Appointment Form</h2>
+
+<form id="appForm">
+    <label>Patient Name:</label><br>
+    <input type="text" id="name"><br><br>
+
+    <label>Email:</label><br>
+    <input type="text" id="email"><br><br>
+
+    <label>Phone Number:</label><br>
+    <input type="text" id="phone"><br><br>
+
+    <label>Appointment Date:</label><br>
+    <input type="date" id="date"><br><br>
+
+    <label>Doctor Name:</label><br>
+    <input type="text" id="doctor"><br><br>
+
+    <label>Reason:</label><br>
+    <textarea id="reason"></textarea><br><br>
+
+    <button type="submit">Book Appointment</button>
+</form>
+
+<p id="error" style="color:red;"></p>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/validator/13.9.0/validator.min.js"></script>
+
+<script>
+document.getElementById("appForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+    let phone = document.getElementById("phone").value;
+    let date = document.getElementById("date").value;
+    let doctor = document.getElementById("doctor").value;
+    let reason = document.getElementById("reason").value;
+
+    let error = document.getElementById("error");
+
+    error.innerHTML = "";
+
+    if (name === "") {
+        error.innerHTML = "Patient name is required!";
+        return;
+    }
+
+    if (!validator.isEmail(email)) {
+        error.innerHTML = "Invalid Email!";
+        return;
+    }
+
+    if (!validator.isMobilePhone(phone, 'any')) {
+        error.innerHTML = "Invalid Phone Number!";
+        return;
+    }
+
+    if (date === "") {
+        error.innerHTML = "Please select appointment date!";
+        return;
+    }
+
+    if (doctor === "") {
+        error.innerHTML = "Doctor name is required!";
+        return;
+    }
+
+    if (reason === "") {
+        error.innerHTML = "Please enter reason!";
+        return;
+    }
+
+    error.style.color = "green";
+    error.innerHTML = "Appointment Booked Successfully!";
+});
+</script>
+
+</body>
+</html>
